@@ -12,12 +12,14 @@ import android.view.MenuItem;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
     private ItemAdapter adapter;
     private RecyclerView rvListadoItems;
     private ArrayList<String> list_items;
     private Toolbar miToolbar;
+    private boolean estadoOrden = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +61,47 @@ public class MainActivity extends AppCompatActivity {
 
         if(id == R.id.opcion1){
             //Ascendente
-
+            list_items.sort(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    return o1.compareTo(o2);
+                }
+            });
+            estadoOrden = true;
         }
         else if(id == R.id.opcion2){
             //Descendente
-
+            list_items.sort(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    return (o1.compareTo(o2))*(-1);
+                }
+            });
+            estadoOrden = false;
         }
         else if(id == R.id.opcion3){
             //Interactivo
-
+            boolean estado = true;
+            if (estadoOrden){
+                list_items.sort(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        return (o1.compareTo(o2))*(-1);
+                    }
+                });
+                estadoOrden = false;
+            }else {
+                list_items.sort(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        return o1.compareTo(o2);
+                    }
+                });
+                estadoOrden = true;
+            }
         }
+        adapter.setList_items(list_items);
+
 
         return true;
     }
