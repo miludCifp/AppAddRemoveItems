@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> list_items;
     private Toolbar miToolbar;
     private boolean estadoOrden = true;
+    private boolean iconoGridLayout = true;
     private SearchView barraBusqueda;
 
     @Override
@@ -124,6 +126,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 estadoOrden = true;
+            }
+        }else if (id== R.id.opcion4){
+            if (iconoGridLayout){
+                rvListadoItems.setLayoutManager(new GridLayoutManager(this, 2));
+                iconoGridLayout = false;
+            } else{
+                rvListadoItems.setLayoutManager(new LinearLayoutManager(this));
+                iconoGridLayout = true;
             }
         }
         adapter.setList_items(list_items);

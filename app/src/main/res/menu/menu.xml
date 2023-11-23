@@ -8,8 +8,14 @@
         android:id="@+id/opcion2"
         android:title="Descendente"/>
     <item
+        android:id="@+id/opcion4"
+        android:title="Ordenar"
+        android:icon="@drawable/grid_view_24"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/opcion3"
         android:title="Ordenar"
         android:icon="@drawable/sort_24"
         app:showAsAction="always"/>
+
 </menu>
