@@ -2,18 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/opcion1"
+        android:id="@+id/opcionAscendente"
         android:title="Ascendente"/>
     <item
-        android:id="@+id/opcion2"
+        android:id="@+id/opcionDescendente"
         android:title="Descendente"/>
     <item
-        android:id="@+id/opcion4"
-        android:title="Ordenar"
+        android:id="@+id/opcionPar"
+        android:title="Par"/>
+    <item
+        android:id="@+id/opcionImPar"
+        android:title="Impar"/>
+    <item
+        android:id="@+id/opcionGrid"
+        android:title="GridLayout"
         android:icon="@drawable/grid_view_24"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/opcion3"
+        android:id="@+id/opcionOrdenar"
         android:title="Ordenar"
         android:icon="@drawable/sort_24"
         app:showAsAction="always"/>

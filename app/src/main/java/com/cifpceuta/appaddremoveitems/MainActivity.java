@@ -8,10 +8,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean estadoOrden = true;
     private boolean iconoGridLayout = true;
     private SearchView barraBusqueda;
+    private FloatingActionButton fabAñadir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,51 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        fabAñadir = findViewById(R.id.fabAñadir);
+
+        fabAñadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+    public void onClick(View v) {
+
+        //Creamos el DIALOG asociado al ActivityMAIN
+        Dialog dialog = new Dialog(MainActivity.this);
+
+        //Le asociamos el layout correspondiente
+        dialog.setContentView(R.layout.dialogo_emergente);
+
+        //Recuperamos los views dentro de dicho layout para recuperar sus valores posteriormente
+        EditText etTextoItem = dialog.findViewById(R.id.etTextoItem);
+        Button btnDialogAñadir = dialog.findViewById(R.id.btnDialogAñadir);
+
+
+        //Establecemos el listener para capturar datos y realizar acción de añadir
+        btnDialogAñadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String item = etTextoItem.getText().toString();
+                // tb se puede realizar una validación de campo no vacio...
+                list_items.add(item);
+                //añadimos el item al final
+                adapter.notifyItemInserted(list_items.size()-1);
+
+                //hacemos desplazar la lista de items hasta dicho valor
+                rvListadoItems.scrollToPosition(list_items.size()-1);
+
+                //Esta llamada cierra el dialogo
+                dialog.dismiss();
+            }
+        });
+
+
+        //Esta llamada abre el diálogo
+        dialog.show();
+
     }
     private void filtrado(String texto){
         ArrayList<String> filteredList_items = new ArrayList<>();
@@ -87,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.opcion1){
+        if(id == R.id.opcionAscendente){
             //Ascendente
             list_items.sort(new Comparator<String>() {
                 @Override
@@ -97,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             });
             estadoOrden = true;
         }
-        else if(id == R.id.opcion2){
+        else if(id == R.id.opcionDescendente){
             //Descendente
             list_items.sort(new Comparator<String>() {
                 @Override
@@ -107,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             });
             estadoOrden = false;
         }
-        else if(id == R.id.opcion3){
+        else if(id == R.id.opcionOrdenar){
             //Interactivo
             boolean estado = true;
             if (estadoOrden){
@@ -127,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 estadoOrden = true;
             }
-        }else if (id== R.id.opcion4){
+        }else if (id== R.id.opcionGrid){
             if (iconoGridLayout){
                 rvListadoItems.setLayoutManager(new GridLayoutManager(this, 2));
                 iconoGridLayout = false;
@@ -135,6 +187,10 @@ public class MainActivity extends AppCompatActivity {
                 rvListadoItems.setLayoutManager(new LinearLayoutManager(this));
                 iconoGridLayout = true;
             }
+        }else if (id== R.id.opcionPar){
+
+        }else if (id== R.id.opcionImPar){
+
         }
         adapter.setList_items(list_items);
 
