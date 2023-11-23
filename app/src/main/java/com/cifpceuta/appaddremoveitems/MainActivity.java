@@ -2,6 +2,7 @@ package com.cifpceuta.appaddremoveitems;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> list_items;
     private Toolbar miToolbar;
     private boolean estadoOrden = true;
+    private SearchView barraBusqueda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,30 @@ public class MainActivity extends AppCompatActivity {
 
         miToolbar = (Toolbar) findViewById(R.id.miToolbar);
         setSupportActionBar(miToolbar);
+
+        barraBusqueda =  (SearchView) findViewById(R.id.barra_Busqueda);
+
+        barraBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filtrado(newText);
+                return false;
+            }
+        });
+    }
+    private void filtrado(String texto){
+        ArrayList<String> filteredList_items = new ArrayList<>();
+        for(String item : list_items){
+            if(item.toLowerCase().contains(texto.toLowerCase())){
+                filteredList_items.add(item);
+            }
+        }
+        adapter.setList_items(filteredList_items);
     }
 
     @Override
